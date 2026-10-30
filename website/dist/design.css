@@ -13,3 +13,9 @@
 
 
 .primary{background:#c63d16;color:#fff}.primary:hover{background:#b73713}
+/* Full-width surfaces; readable content spacing without a boxed page wrapper. */
+.site-shell{max-width:none;width:100%;margin:0;border-inline:0}
+@media(min-width:951px){.header,.agent-strip,.footer{padding-inline:max(42px,calc((100vw - 1320px)/2))}.section,.care-note{padding-inline:max(58px,calc((100vw - 1240px)/2))}.hero{padding-inline:max(38px,calc((100vw - 1320px)/2));padding-top:clamp(77px,7vw,116px)}.hero-baseline{margin-top:clamp(69px,6vw,100px)}.capabilities .section-heading{column-gap:80px}.install-section,.faq{column-gap:clamp(55px,7vw,130px)}}
+
+#page-pixels{z-index:6}
+

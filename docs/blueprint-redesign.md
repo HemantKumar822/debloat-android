@@ -9,3 +9,5 @@ Verify desktop and mobile, keyboard install tabs, copy/FAQ/pause, assets, syntax
 User revision: rejected the blue/pink palette after preview. Restore warm white, charcoal and burnt-orange colors only; keep the full redesigned structure.
 
 Final verification: warm palette published; JavaScript syntax checks and local asset links pass. Browser confirms 390px viewport with 375px content (no horizontal overflow), Cursor tab path selection and pause control. OS reduced-motion emulation was not performed.
+
+Full-width/scroll follow-up: removed 1200px page cap and vertical borders. At 1440px viewport, wrapper is 1424.8px (available width after scrollbar) with 0px side border. Pixel progress line and edge mosaics track scroll; verified visually at installation section. Motion JavaScript syntax and local link checks pass.
