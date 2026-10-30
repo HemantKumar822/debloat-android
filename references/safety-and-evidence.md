@@ -5,7 +5,7 @@
 - **Observed fact**: ADB reports package X installed, disabled, or system-classified *in the observed package context*. Cite that observation as observed, not as an explanation of behavior.
 - **Weak signal**: A package ID contains a name fragment such as `analytics`, `adservice`, or `appmarket`. These may be legitimate system components and must be presented only as *research candidates*.
 - **Externally documented**: Manufacturer docs and reputable package analyses might explain purpose. Check Android version, OEM skin, region, and dependencies; record citations and uncertainty.
-- **Verified candidate for a future change**: Need model/build-specific evidence, no vital dependencies, a documented rollback, appropriate backups, and explicit informed approval. This version cannot reach an executable change state.
+- **Verified candidate for a future change**: Need model/build-specific evidence, no vital dependencies, a documented rollback, appropriate backups, and explicit informed approval. The experimental change workflow accepts reviewer evidence but cannot independently prove it; system apps remain blocked. Read changes.md before any action.
 
 ## Never infer
 
@@ -25,7 +25,7 @@ Launcher, SystemUI, phone/dialer, SMS, connectivity, SIM/eSIM, IMS, emergency ca
 - Record unavailability and gaps when a query fails; don't silently score unknown data as clean.
 - Keep data local by default; avoid identifiers and private content not strictly needed.
 - The user must remain in control; don't rush them through warnings.
-- Before any future change engine, require actual emulator/device testing, failure handling, privilege boundaries, idempotence, rollback and independent code review. This v0.3 release remains read-only.
+- Before a stable change-engine release, require emulator/device testing, failure handling, privilege boundaries, idempotence, restoration and independent code review. v0.4 includes opt-in third-party changes with simulated tests; stable release still requires physical validation.
 
 ## Collection boundary
 

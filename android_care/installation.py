@@ -11,8 +11,8 @@ USER_DIRS = {**PROJECT_DIRS, 'antigravity': '.gemini/config/skills'}
 PUBLIC_FILES = (
     'SKILL.md', 'LICENSE', 'scripts/android_care.py', 'scripts/install_skill.py',
     'android_care/__init__.py', 'android_care/adb.py', 'android_care/cli.py',
-    'android_care/analyzer.py', 'android_care/report.py', 'android_care/installation.py',
-    'references/onboarding.md', 'references/roadmap.md', 'references/safety-and-evidence.md',
+    'android_care/analyzer.py', 'android_care/report.py', 'android_care/installation.py', 'android_care/changes.py',
+    'references/onboarding.md', 'references/roadmap.md', 'references/safety-and-evidence.md', 'references/changes.md',
 )
 
 

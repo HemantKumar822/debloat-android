@@ -13,9 +13,10 @@ from android_care.report import render
 
 
 GUIDE = """
-DEBLOAT ANDROID | Guided setup | v0.3 READ ONLY
+DEBLOAT ANDROID | Guided setup | v0.4 EXPERIMENTAL CHANGES
 
-Hello! We'll inspect your Android together. Nothing will be deleted or disabled.
+Hello! Start with an audit. Audits never change your phone.
+Optional app disabling requires a separate reviewed plan and explicit approval.
 Only inspect a phone you own or have permission to inspect.
 
 1. Install Android SDK Platform Tools (ADB) on your trusted computer.
@@ -77,7 +78,7 @@ def save_report(audit: dict, out: str, save_json: bool) -> Path:
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="Friendly read-only Android auditor (no root, no changes).")
+    parser = argparse.ArgumentParser(description="Guided Android care: audit, review, optional experimental disable and restore.")
     commands = parser.add_subparsers(dest="action")
     commands.add_parser("guide", help="Friendly USB debugging setup and privacy guidance")
     commands.add_parser("devices", help="List available ADB devices")
@@ -90,12 +91,58 @@ def main(argv=None) -> int:
     audit.add_argument("--consent", action="store_true", help="Confirm permission to read installed package names and device information")
     demo = commands.add_parser("demo", help="Generate a synthetic example report (no phone needed)")
     demo.add_argument("--output", default="demo-android-audit.md", help="Markdown report path")
+    for action in ('plan', 'apply', 'restore'):
+        change = commands.add_parser(action, help=f"Experimental single-app {action}; see references/changes.md")
+        change.add_argument('--serial', required=True, help='Explicit selected device identifier')
+        change.add_argument('--experimental', action='store_true', help='Acknowledge lack of physical-device validation')
+        if action == 'plan':
+            change.add_argument('--consent', action='store_true', help='Allow package, role, keyboard and device-policy checks')
+            change.add_argument('--package', required=True)
+            change.add_argument('--reason', required=True)
+            change.add_argument('--evidence', required=True, help='Reviewed role, dependencies, source and expected impact')
+            change.add_argument('--output', required=True, help='New private JSON plan; Markdown review saved alongside')
+        else:
+            change.add_argument('--plan' if action == 'apply' else '--recovery', required=True)
+            change.add_argument('--approve', required=True, help='Full SHA-256 of the document explicitly approved by the user')
+            change.add_argument('--receipt', required=True, help='New recovery/restore journal path')
+            change.add_argument('--backup-acknowledged', action='store_true', help='User reviewed backup/recovery limits; not proof of a backup')
     args = parser.parse_args(argv)
 
     if args.action in (None, "guide"):
         _say(GUIDE)
         return 0
     try:
+        if args.action in ('plan', 'apply', 'restore'):
+            from android_care import changes
+            if not args.experimental:
+                raise AuditError('Changes are experimental and not validated on physical phones. Review references/changes.md before opting in with --experimental.')
+            if args.action == 'plan' and not args.consent:
+                raise AuditError('Plan preflight reads package, role, keyboard and device-policy state; explicit --consent required.')
+            if args.action != 'plan' and not args.backup_acknowledged:
+                raise AuditError('Review backup/recovery limits with the user before --backup-acknowledged. This flag does not verify a backup.')
+            adapter = changes.ChangeADB()
+            if args.action == 'plan':
+                plan = changes.create_plan(adapter, args.serial, args.package, args.reason, args.evidence)
+                target = Path(args.output)
+                if target.suffix.lower() != '.json': raise ValueError('Plan output must be a .json file.')
+                review = target.with_suffix('.md')
+                if review.exists(): raise FileExistsError('Markdown review already exists; choose another path.')
+                changes.save_document(target, plan)
+                # JSON encoding inside a fenced block prevents untrusted evidence from becoming Markdown directives.
+                encoded = json.dumps(plan, indent=2, ensure_ascii=True).replace('`', '\\u0060')
+                _save_private(review, '# Review one app change\n\nExperimental: no physical-device validation.\n\n'
+                    + 'Read the reason, evidence and risk below. Approval applies only to this document.\n\n```json\n'
+                    + encoded + '\n```\n\nApproval SHA-256: `' + changes.digest(plan) + '`\n')
+                _say(f'Plan saved: {target}\nRead the review: {review}\nApproval SHA-256: {changes.digest(plan)}\nNo app changed. Ask the user to review this exact plan before applying.')
+            else:
+                source = Path(args.plan if args.action == 'apply' else args.recovery)
+                if source.stat().st_size > 100_000: raise ValueError('Change document is unexpectedly large.')
+                document = json.loads(source.read_text(encoding='utf-8'))
+                operation = changes.apply_plan if args.action == 'apply' else changes.restore
+                result = operation(adapter, args.serial, document, args.approve, Path(args.receipt))
+                _say(json.dumps(result, indent=2))
+                _say('Check app access, notifications, calls and other essential functions on the phone. Keep the recovery receipt private. Revoke USB debugging when finished.')
+            return 0
         if args.action == "audit" and not args.consent:
             raise AuditError("Inventory permission is required. Package names can reveal personal interests. "
                              "Cloud agents may process details they read. If you agree, run audit --consent.")
@@ -132,7 +179,9 @@ def main(argv=None) -> int:
             _say(f"\nRead-only audit complete.\n  Report: {path}\n  Packages: {report['summary']['total']} | Research candidates: {report['summary']['review']}\n  No settings or apps were changed. Open the Markdown report in a text editor or Markdown viewer.\n  When finished, turn off USB debugging or revoke access.")
             return 0
     except (AuditError, ValueError, PermissionError, OSError) as exc:
-        _say(f"Couldn't finish safely: {exc}\nNothing was intentionally modified.", file=sys.stderr)
+        state = ('A change may have occurred if a command was submitted. Keep the receipt; inspect state before retrying.'
+                 if args.action in ('apply', 'restore') else 'No device-changing command was requested.')
+        _say(f"Couldn't finish safely: {exc}\n{state}", file=sys.stderr)
         return 2
     parser.print_help()
     return 1

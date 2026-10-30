@@ -2,9 +2,9 @@
 
 **Less guesswork. More control.**
 
-A portable agent skill for understanding an Android device, with guided onboarding, conservative package research and private Markdown reports.
+A portable agent skill for understanding an Android device and reviewing optional app changes, with guided onboarding, conservative package research and private Markdown reports.
 
-**v0.3 read-only preview.** Device-changing operations are absent. No root, automatic cleanup or promised performance gains. Real-phone and live IDE validation remain release gates.
+**v0.4 experimental actions.** Audit first, then optionally review, disable and restore one third-party app. No root, uninstall, data clearing or settings writes. System apps are blocked. Physical-device and live IDE validation remain release gates.
 
 ## Try it
 
@@ -52,7 +52,7 @@ python scripts/android_care.py audit --consent --output android-audit-report.md
 
 ## Safety and evidence
 
-A fixed allowlist is checked at the ADB subprocess boundary, with no shell execution or mutation override. No disable, uninstall, settings-write or apply mode exists. This constrains the supplied adapter; it cannot sandbox an unrestricted agent or modified code.
+The audit adapter remains read-only. A separate experimental change executor supports plan/apply/restore with explicit per-plan approval, fresh preflight, expiry, a durable recovery receipt and result verification. It only supports one reviewed third-party app on owner user 0. It is not a sandbox around an unrestricted agent. Read the [complete action workflow](references/changes.md) before opting in; no physical-device validation has been performed.
 
 Package-name clues are low-confidence research leads, not evidence of spying, malware or safe removal. Malformed and inconsistent inventories stop the audit. Optional missing observations stay visible. Backup status is always **not verified**; an inventory is not a backup.
 
@@ -67,12 +67,12 @@ python -m http.server 4173 --bind 127.0.0.1 --directory website/dist
 ```
 
 - `SKILL.md`: guided agent behavior and boundaries.
-- `android_care/`: read-only ADB, analysis, Markdown rendering and packaging.
+- `android_care/`: read-only auditing, experimental guarded changes, Markdown rendering and packaging.
 - `references/`: onboarding, evidence limits and roadmap.
 - `website/dist/`: dependency-free landing page with native CSS/Web Animations.
 - `tests/`: fake-device, consent, output, installer and packaging regressions.
 
-See [validation](docs/validation-v0.3.md) and [the implementation brief](docs/next-release-plan.md). Changes to device state remain disabled until separately implemented, reviewed and validated.
+See [validation](docs/validation-v0.3.md) and [the implementation brief](docs/next-release-plan.md). Experimental third-party app changes now exist; stable release and system-package support remain gated on device validation.
 
 ## License
 

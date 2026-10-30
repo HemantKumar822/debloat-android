@@ -5,9 +5,27 @@
   const ctx = canvas.getContext('2d');
   if (!ctx) {toggle.hidden=true;return;}
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let paused=false, frame=0, last=0, time=0, width=0, height=0, progress=0, scrollOffset=0, mouse={x:-1000,y:-1000};
+  let paused=false, frame=0, last=0, time=0, width=0, height=0, scrollOffset=0, mouse={x:-1000,y:-1000};
   function draw() {
     ctx.clearRect(0,0,width,height);
+    const dark=document.documentElement.dataset.theme==='dark';
+    const pitch=width<700?44:38;
+    // A quiet lattice across the entire viewport, with a travelling diagonal current.
+    // The pointer reveals a little of the field; it never moves the page content.
+    for(let col=0;col<Math.ceil(width/pitch);col++) {
+      for(let row=-1;row<Math.ceil(height/pitch)+1;row++) {
+        const x=col*pitch+pitch/2;
+        const y=row*pitch+(scrollOffset*.08)%pitch;
+        const distance=Math.hypot(x-mouse.x,y-mouse.y);
+        const hover=!paused&&!reduced.matches?Math.max(0,1-distance/180):0;
+        const wave=Math.pow(Math.max(0,Math.sin(col*.19+row*.25-time*.65)),12);
+        const margin=Math.min(x,width-x)<width*.12;
+        const opacity=(dark?.025:.018)+wave*(margin?.12:.025)+hover*.16;
+        const size=hover>.55||wave>.8&&margin?3:1.4;
+        ctx.fillStyle=`rgba(${dark?'240,154,119':'185,80,42'},${opacity})`;
+        ctx.fillRect(Math.round(x),Math.round(y),size,size);
+      }
+    }
     const edge = width < 700 ? 16 : Math.min(85,width*.055);
     for(let i=0;i<48;i++) {
       const side=i%2;
@@ -23,8 +41,6 @@
 
   function measureScroll() {
     scrollOffset=scrollY;
-    const range=document.documentElement.scrollHeight-innerHeight;
-    progress=range>0?Math.max(0,Math.min(1,scrollOffset/range)):0;
     if(paused||reduced.matches)draw();
   }
 
@@ -47,5 +63,6 @@
   addEventListener('resize',resize,{passive:true});
   addEventListener('scroll',measureScroll,{passive:true});
   addEventListener('pointermove',event=>{if(event.pointerType==='mouse')mouse={x:event.clientX,y:event.clientY};},{passive:true});
+  document.addEventListener('pointerleave',()=>{mouse={x:-1000,y:-1000};});
   resize();
 })();

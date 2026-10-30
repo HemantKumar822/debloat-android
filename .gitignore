@@ -8,6 +8,10 @@ demo-android-audit.html
 !examples/demo-android-audit.html
 node_modules/
 reports/
+change-plan*.json
+change-plan*.md
+*recovery*.json
+*receipt*.json
 artifacts/
 playwright-report/
 .tools/

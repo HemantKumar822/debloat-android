@@ -30,8 +30,8 @@ class InstallationTests(unittest.TestCase):
             source = Path(temp) / 'source'
             wanted = ['SKILL.md', 'LICENSE', 'scripts/android_care.py', 'scripts/install_skill.py',
                       'android_care/__init__.py', 'android_care/adb.py', 'android_care/cli.py',
-                      'android_care/analyzer.py', 'android_care/report.py', 'android_care/installation.py',
-                      'references/onboarding.md', 'references/roadmap.md', 'references/safety-and-evidence.md']
+                      'android_care/analyzer.py', 'android_care/report.py', 'android_care/installation.py', 'android_care/changes.py',
+                      'references/onboarding.md', 'references/roadmap.md', 'references/safety-and-evidence.md', 'references/changes.md']
             unwanted = ['reports/private.md', '.git/config', 'website/index.html',
                         'tools/adb.exe', 'android_care/__pycache__/cached.py',
                         'references/private/secret.md', 'scripts/unrelated.py',

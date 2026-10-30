@@ -51,6 +51,6 @@
     try {await navigator.clipboard.writeText(text);feedback.textContent=label+' copied.';}
     catch {feedback.textContent='Clipboard unavailable. Select the text above and copy it manually.';}
   }
-  document.getElementById('copy-path')?.addEventListener('click',()=>copy('skill-path','Installation path'));
+  document.getElementById('copy-path')?.addEventListener('click',()=>copy('skill-path','Installation commands'));
   document.getElementById('copy-prompt')?.addEventListener('click',()=>copy('skill-prompt','Agent prompt'));
 })();
