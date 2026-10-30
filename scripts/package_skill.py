@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the curated portable Droidwell ZIP using the installer manifest."""
+"""Build the curated portable Debloat Android ZIP using the installer manifest."""
 from pathlib import Path
 import argparse
 import sys
@@ -13,7 +13,7 @@ def main(argv=None):
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, 'reconfigure'):
             stream.reconfigure(errors='backslashreplace')
-    parser = argparse.ArgumentParser(description='Build a portable Droidwell skill ZIP.')
+    parser = argparse.ArgumentParser(description='Build a portable Debloat Android skill ZIP.')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(argv)
     try:

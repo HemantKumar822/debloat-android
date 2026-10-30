@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the reviewed local Droidwell source; does not download or execute code."""
+"""Install the reviewed local Debloat Android source; does not download or execute code."""
 from pathlib import Path
 import argparse
 import sys
@@ -13,7 +13,7 @@ def main(argv=None):
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, 'reconfigure'):
             stream.reconfigure(errors='backslashreplace')
-    parser = argparse.ArgumentParser(description='Install Droidwell as the android-device-care skill.')
+    parser = argparse.ArgumentParser(description='Install Debloat Android as the android-device-care skill.')
     parser.add_argument('--agent', required=True, choices=PROJECT_DIRS)
     scope = parser.add_mutually_exclusive_group(required=True)
     scope.add_argument('--project', type=Path, help='Project directory (created if needed)')

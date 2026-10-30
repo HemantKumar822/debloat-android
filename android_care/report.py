@@ -24,7 +24,7 @@ def render(report: dict) -> str:
     phone = report["device"]
     packages = report["packages"]
     demo = report["mode"].startswith("DEMO")
-    lines = ["# Droidwell — Android audit", "", "v0.3 read-only preview", "",
+    lines = ["# Debloat Android — Android audit", "", "v0.3 read-only preview", "",
              f"Generated: {text(report['generated_at'])}", "",
              f"Mode: {text(report['mode'])}", "",
              "No changes performed. This report is an inventory, not a security verdict.", "",

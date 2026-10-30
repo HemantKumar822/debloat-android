@@ -1,6 +1,6 @@
-# Droidwell
+# Debloat Android
 
-**A little care. A clearer Android.**
+**Less guesswork. More control.**
 
 A portable agent skill for understanding an Android device, with guided onboarding, conservative package research and private Markdown reports.
 
@@ -37,7 +37,7 @@ Use `cursor`, `claude`, or `antigravity` instead of `codex`; use `--user` instea
 
 These paths were checked against official documentation; live activation in all four hosts is not yet validated. See [compatibility sources](docs/next-release-plan.md#compatibility-sources-checked). The agent needs local terminal access to the computer attached to the phone. Cloud skill discovery alone does not provide USB access.
 
-Alternatively, extract [the portable ZIP](website/dist/droidwell-skill.zip) and place its `android-device-care` directory in the corresponding skills directory. Ask your agent to use android-device-care. Run commands from the installed skill directory or use an absolute path to its entrypoint.
+Alternatively, extract [the portable ZIP](website/dist/debloat-android-skill.zip) and place its `android-device-care` directory in the corresponding skills directory. Ask your agent to use android-device-care. Run commands from the installed skill directory or use an absolute path to its entrypoint.
 
 ## Inspect a phone
 
@@ -62,7 +62,7 @@ The local code makes no network requests. Installed-app names can reveal persona
 
 ```bash
 python -m unittest discover -s tests -v
-python scripts/package_skill.py --output droidwell-skill.zip
+python scripts/package_skill.py --output debloat-android-skill.zip
 python -m http.server 4173 --bind 127.0.0.1 --directory website/dist
 ```
 
@@ -78,4 +78,5 @@ See [validation](docs/validation-v0.3.md) and [the implementation brief](docs/ne
 
 MIT. No third-party package database is redistributed.
 
-[Private website preview](https://droidwell.boldvine257.chatgpt.site) · [GitHub repository](https://github.com/HemantKumar822/droidwell)
+[Private website preview](https://droidwell.boldvine257.chatgpt.site) · [GitHub repository](https://github.com/HemantKumar822/debloat-android)
+

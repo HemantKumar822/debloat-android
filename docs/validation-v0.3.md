@@ -16,3 +16,5 @@ Real-device audits across Android/OEM versions, real IDE discovery and permissio
 The v0.2 validation document is historical; its HTML-report browser checks do not describe the current Markdown renderer.
 
 Final suite: 45 tests passed. Skill frontmatter validator passed; JavaScript syntax check passed. Independent review identified and fixed wildcard bundle inclusion and Python 3.10/3.11 reparse-point detection; both received regression coverage. Real Windows junction behavior under Python 3.10 remains untested.
+
+2026-10-30 branding and motion update: 45 Python tests pass; motion.js syntax check passes. Browser confirms new content, continuous pixel current and pause/resume. Reduced motion and background/offscreen suspension reviewed in source.

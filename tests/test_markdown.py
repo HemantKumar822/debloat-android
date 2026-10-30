@@ -15,7 +15,7 @@ class MarkdownTests(unittest.TestCase):
     def test_complete_standalone_markdown_inventory(self):
         audit = demo_audit()
         document = render(audit)
-        self.assertTrue(document.startswith('# Droidwell'))
+        self.assertTrue(document.startswith('# Debloat Android'))
         for heading in ['Summary', 'Device snapshot', 'Package research', 'Full inventory',
                         'Evidence coverage', 'Backup status', 'Limitations', 'Next steps']:
             self.assertIn('## ' + heading, document)

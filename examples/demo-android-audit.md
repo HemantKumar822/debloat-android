@@ -1,4 +1,4 @@
-# Droidwell — Android audit
+# Debloat Android — Android audit
 
 v0.3 read-only preview
 

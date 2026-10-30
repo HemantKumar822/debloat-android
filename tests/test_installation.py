@@ -142,7 +142,7 @@ class InstallationTests(unittest.TestCase):
             project = Path(temp) / 'project'
             result = self.run_script('install_skill.py', '--agent', 'claude', '--project', project)
             self.assertEqual(result.returncode, 0, result.stderr)
-            archive = Path(temp) / 'droidwell.zip'
+            archive = Path(temp) / 'debloat android.zip'
             result = self.run_script('package_skill.py', '--output', archive)
             self.assertEqual(result.returncode, 0, result.stderr)
             target = project / '.claude/skills/android-device-care'

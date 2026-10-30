@@ -13,7 +13,7 @@ from android_care.report import render
 
 
 GUIDE = """
-DROIDWELL | Guided setup | v0.3 READ ONLY
+DEBLOAT ANDROID | Guided setup | v0.3 READ ONLY
 
 Hello! We'll inspect your Android together. Nothing will be deleted or disabled.
 Only inspect a phone you own or have permission to inspect.
