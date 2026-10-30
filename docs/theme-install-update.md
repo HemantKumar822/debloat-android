@@ -1,0 +1,5 @@
+# Theme and installation update
+
+Dark/light icon with saved preference and system default. View Transitions circular reveal from toggle; reduced motion and unsupported browsers switch instantly. New dark palette covers all landing/documentation sections. Removed scroll progress visual. Canvas pixels repel from mouse, pause when hidden, and honor reduced motion. Content enters with stepped clipping; baseline content remains visible without JS.
+
+Canonical GitHub URL verified via gh: https://github.com/HemantKumar822/debloat-android (PRIVATE). The site copies a git clone command plus personal installer invocation for selected agent and Python command. It labels Git/Python prerequisites, private-repo access and existing-folder constraints. Portable ZIP includes installer. Terminal output explains activation and read-only boundary. Added welcome integration regression; 46 Python tests pass. JavaScript syntax and local-link checks pass. Browser verified theme switching/expanding animation and Cursor/python3 command updates. Live IDE discovery and physical phone validation remain outstanding.

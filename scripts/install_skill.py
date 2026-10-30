@@ -29,6 +29,16 @@ def main(argv=None):
     print(f'{"Would install" if args.dry_run else "Installed"} {len(files)} files: {target}')
     if args.dry_run:
         print('\n'.join(files))
+    else:
+        print('\n  + DEBLOAT ANDROID  /  READ-ONLY PREVIEW')
+        print('  -------------------------------------')
+        print('  Your skill is ready. No phone was accessed.')
+        print('\n  NEXT STEPS')
+        print('  1. Start a new local agent chat if needed.')
+        print('  2. Ask: Use android-device-care to guide me through a read-only audit.')
+        print('  3. The agent will explain setup and ask before reading installed apps.')
+        print('\n  Python and Android Platform Tools are required for device audits.')
+        print('  Source: https://github.com/HemantKumar822/debloat-android')
     return 0
 
 

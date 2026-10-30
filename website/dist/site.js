@@ -2,8 +2,8 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const animateIn = node => {
     if (!reduced.matches && node.animate) node.animate(
-      [{opacity:0, transform:'translateY(14px)'}, {opacity:1, transform:'translateY(0)'}],
-      {duration:650, easing:'cubic-bezier(.2,.7,.2,1)'});
+      [{opacity:0, clipPath:'inset(0 0 100% 0)',transform:'translateY(10px)'}, {opacity:1,clipPath:'inset(0)',transform:'translateY(0)'}],
+      {duration:650, easing:'steps(10,end)'});
   };
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
@@ -27,11 +27,13 @@
   function select(tab) {
     const agent = agents[tab.dataset.agent];
     tabs.forEach(item => {const active=item===tab; item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1;});
-    document.getElementById('skill-path').textContent=agent.path;
+    const runtime=document.getElementById('python-command').value;
+    document.getElementById('skill-path').textContent='git clone https://github.com/HemantKumar822/debloat-android.git debloat-android\n'+runtime+' debloat-android/scripts/install_skill.py --agent '+tab.dataset.agent+' --user';
     document.getElementById('agent-note').textContent=agent.note;
     document.getElementById('copy-feedback').textContent='';
     panel.setAttribute('aria-labelledby',tab.id);
   }
+  document.getElementById('python-command')?.addEventListener('change',()=>select(tabs.find(t=>t.getAttribute('aria-selected')==='true')));
   tabs.forEach((tab,index) => {
     tab.addEventListener('click',()=>select(tab));
     tab.addEventListener('keydown',event=>{

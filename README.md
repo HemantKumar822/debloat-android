@@ -80,3 +80,12 @@ MIT. No third-party package database is redistributed.
 
 [Private website preview](https://droidwell.boldvine257.chatgpt.site) · [GitHub repository](https://github.com/HemantKumar822/debloat-android)
 
+
+Fresh computer (Git, Python and access to this private repository required):
+
+```bash
+git clone https://github.com/HemantKumar822/debloat-android.git debloat-android
+python debloat-android/scripts/install_skill.py --agent codex --user
+```
+
+On macOS/Linux use `python3` if that is your Python command. Choose another supported agent as needed. Do not reuse an existing clone destination; run the installer from your existing checkout instead. The portable ZIP also includes `scripts/install_skill.py`; run it from the extracted skill folder.

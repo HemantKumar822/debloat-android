@@ -28,7 +28,7 @@ class InstallationTests(unittest.TestCase):
     def test_curated_manifest_excludes_private_and_nested_files(self):
         with tempfile.TemporaryDirectory() as temp:
             source = Path(temp) / 'source'
-            wanted = ['SKILL.md', 'LICENSE', 'scripts/android_care.py',
+            wanted = ['SKILL.md', 'LICENSE', 'scripts/android_care.py', 'scripts/install_skill.py',
                       'android_care/__init__.py', 'android_care/adb.py', 'android_care/cli.py',
                       'android_care/analyzer.py', 'android_care/report.py', 'android_care/installation.py',
                       'references/onboarding.md', 'references/roadmap.md', 'references/safety-and-evidence.md']
@@ -101,7 +101,7 @@ class InstallationTests(unittest.TestCase):
                 self.assertTrue((target / 'references/onboarding.md').is_file())
                 self.assertFalse((target / 'website').exists())
                 self.assertFalse((target / 'tests').exists())
-                self.assertFalse((target / 'scripts/install_skill.py').exists())
+                self.assertTrue((target / 'scripts/install_skill.py').exists())
                 (target / 'SKILL.md').write_text('keep me', encoding='utf-8')
                 result = self.run_script('install_skill.py', '--agent', host, '--project', project)
                 self.assertNotEqual(result.returncode, 0)
@@ -158,3 +158,4 @@ class InstallationTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
